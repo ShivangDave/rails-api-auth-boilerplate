@@ -9,7 +9,7 @@ class Api::V1::AuthController < ApplicationController
     # if the user exists, check the password
     if @user && @user.authenticate(users_params[:password])
       # if all good, generate a token
-      token = JWT.encode { :user_id => @user.id }, ENV['JWT_TOKEN_SECRET']
+      token = JWT.encode({ :user_id => @user.id }, ENV['JWT_TOKEN_SECRET'], 'HS256')
       # send the token as response
       render json: { :msg => "Login successful.", :token => token }, :status => :ok
     else

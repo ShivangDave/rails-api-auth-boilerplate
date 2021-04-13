@@ -1,5 +1,13 @@
 class Api::V1::UsersController < ApplicationController
 
+  # TEST: only see all users if authenticated
+  before_action :authenticate, only: [:index]
+
+  # def index
+  #   @users = Api::V1::User.all
+  #   render json: @users, :status => :ok
+  # end
+
   # Signup flow
   def create
     # Instantiate a user
@@ -15,8 +23,8 @@ class Api::V1::UsersController < ApplicationController
         # OR
         # can also send back the token.
         # depending on your user auth flow, choose your responses.
-        
-        # token = JWT.encode { :user_id => @user.id }, ENV['JWT_TOKEN_SECRET']
+
+        # token = JWT.encode({ :user_id => @user.id }, ENV['JWT_TOKEN_SECRET'], 'HS256')
         # send the token as response
         # render json: { :msg => "Login successful.", :token => token }, :status => :ok
       else
